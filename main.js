@@ -1312,23 +1312,50 @@ function initJoinRoomFlow() {
   });
 }
 
-function showLobby(code, isHost) {
+// ===============================
+// LOBBY MULTIPLAYER (corrigido)
+// ===============================
+function showLobby(room, isHost) {
   document.getElementById('create-room-section').style.display = 'none';
   document.getElementById('join-room-section').style.display = 'none';
   document.getElementById('lobby-section').style.display = 'block';
-  document.getElementById('lobby-room-code').textContent = code;
+  document.getElementById('lobby-room-code').textContent = room.code || room;
 
-  if (isHost) {
-    document.getElementById('start-multiplayer-game-btn').style.display = 'block';
-    document.getElementById('start-multiplayer-game-btn').addEventListener('click', startMultiplayerGame);
+  // Escuta atualizações em tempo real do Supabase
+  multiplayerManager.onPlayersUpdate((players) => {
+    updateLobbyPlayers(players);
+  });
+
+  multiplayerManager.onRoomUpdate((updatedRoom) => {
+    if (updatedRoom.status === 'playing') {
+      startMultiPlayerGame();
+    }
+  });
+
+  // Botão "Estou Pronto"
+  const readyBtn = document.getElementById('ready-btn');
+  if (readyBtn) {
+    readyBtn.addEventListener('click', async () => {
+      await multiplayerManager.setReady(true);
+    });
   }
 
+  // Botão "Iniciar Jogo" (apenas host)
+  const startBtn = document.getElementById('start-multiplayer-game-btn');
+  if (isHost && startBtn) {
+    startBtn.addEventListener('click', startMultiPlayerGame);
+  }
+
+  // Atualiza o lobby imediatamente ao entrar
   updateLobbyPlayers();
 }
 
-async function updateLobbyPlayers() {
+// ===============================
+// Atualiza visual do lobby
+// ===============================
+async function updateLobbyPlayers(playersData = null) {
   try {
-    const players = await multiplayerManager.getPlayers(multiplayerManager.currentRoom.id);
+    const players = playersData || await multiplayerManager.getPlayers(multiplayerManager.currentRoom.id);
     const lobbyList = document.getElementById('lobby-players-list');
     lobbyList.innerHTML = '';
 
@@ -1345,7 +1372,7 @@ async function updateLobbyPlayers() {
       lobbyList.appendChild(playerEl);
     });
 
-    // --- Controle do botão "Iniciar Jogo" ---
+    // Controle do botão "Iniciar Jogo"
     const startBtn = document.getElementById('start-multiplayer-game-btn');
     const allReady = players.length >= 2 && players.every(p => p.is_ready);
     const isHost = multiplayerManager.isHost === true;
@@ -1359,6 +1386,21 @@ async function updateLobbyPlayers() {
         startBtn.disabled = true;
       }
     }
+
+    // Atualiza status
+    const lobbyStatus = document.getElementById('lobby-status');
+    if (players.length === selectedPlayerCount) {
+      lobbyStatus.textContent = allReady
+        ? 'Todos prontos! Host pode iniciar a partida.'
+        : 'Aguardando todos ficarem prontos...';
+    } else {
+      lobbyStatus.textContent = `Aguardando jogadores... (${players.length}/${selectedPlayerCount})`;
+    }
+  } catch (error) {
+    console.error('Erro ao atualizar lobby:', error);
+  }
+}
+
 
     // Atualiza o texto de status
     const lobbyStatus = document.getElementById('lobby-status');
