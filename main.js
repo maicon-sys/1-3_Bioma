@@ -1401,24 +1401,6 @@ async function updateLobbyPlayers(playersData = null) {
   }
 }
 
-
-    // Atualiza o texto de status
-    const lobbyStatus = document.getElementById('lobby-status');
-    if (players.length === selectedPlayerCount) {
-      if (allReady) {
-        lobbyStatus.textContent = 'Todos prontos! Host pode iniciar a partida.';
-      } else {
-        lobbyStatus.textContent = 'Aguardando todos ficarem prontos...';
-      }
-    } else {
-      lobbyStatus.textContent = `Aguardando jogadores... (${players.length}/${selectedPlayerCount})`;
-    }
-  } catch (error) {
-    console.error('Error updating lobby:', error);
-  }
-}
-
-
 async function startMultiplayerMatch(room) {
   console.log('Starting multiplayer match with room:', room);
 }
