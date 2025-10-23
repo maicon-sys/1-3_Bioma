@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>BIOMA - Jogo de Cartas</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="mode-select-screen" class="screen active">
+        <div class="setup-container">
+          <h1>🌿 BIOMA 🌿</h1>
+          <p class="subtitle">Resgate os animais da fauna brasileira</p>
+
+          <div class="setup-section">
+            <h3>Escolha o Modo de Jogo</h3>
+            <div class="mode-selector">
+              <button class="mode-btn" data-mode="local">
+                <span class="mode-icon">🤖</span>
+                <span class="mode-name">Jogar contra IA</span>
+                <span class="mode-desc">Jogue sozinho contra bots</span>
+              </button>
+              <button class="mode-btn" data-mode="online">
+                <span class="mode-icon">🌐</span>
+                <span class="mode-name">Multiplayer Online</span>
+                <span class="mode-desc">Jogue com amigos online</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="setup-screen" class="screen">
+        <div class="setup-container">
+          <h1>🌿 BIOMA 🌿</h1>
+          <p class="subtitle">Resgate os animais da fauna brasileira</p>
+
+          <div class="setup-section">
+            <h3>Número de Jogadores</h3>
+            <div class="player-count-selector">
+              <button class="player-count-btn" data-count="2">2 Jogadores</button>
+              <button class="player-count-btn" data-count="3">3 Jogadores</button>
+              <button class="player-count-btn" data-count="4">4 Jogadores</button>
+            </div>
+          </div>
+
+          <div class="setup-section" id="biome-selection" style="display: none;">
+            <h3>Escolha os Biomas</h3>
+            <p class="biome-instruction">Selecione <span id="biome-count">2</span> biomas diferentes</p>
+            <div class="biome-grid">
+              <button class="biome-btn" data-biome="Amazônia">
+                <span class="biome-icon">🌳</span>
+                <span class="biome-name">Amazônia</span>
+              </button>
+              <button class="biome-btn" data-biome="Mata Atlântica">
+                <span class="biome-icon">🌺</span>
+                <span class="biome-name">Mata Atlântica</span>
+              </button>
+              <button class="biome-btn" data-biome="Cerrado">
+                <span class="biome-icon">🌾</span>
+                <span class="biome-name">Cerrado</span>
+              </button>
+              <button class="biome-btn" data-biome="Caatinga">
+                <span class="biome-icon">🌵</span>
+                <span class="biome-name">Caatinga</span>
+              </button>
+              <button class="biome-btn" data-biome="Pantanal">
+                <span class="biome-icon">🦩</span>
+                <span class="biome-name">Pantanal</span>
+              </button>
+              <button class="biome-btn" data-biome="Pampa">
+                <span class="biome-icon">🌱</span>
+                <span class="biome-name">Pampa</span>
+              </button>
+            </div>
+          </div>
+
+          <button id="start-game-btn" class="primary-btn" style="display: none;">Iniciar Jogo</button>
+        </div>
+      </div>
+
+      <div id="multiplayer-screen" class="screen">
+        <div class="setup-container">
+          <h1>🌿 BIOMA 🌿</h1>
+          <p class="subtitle">Multiplayer Online</p>
+
+          <div class="setup-section">
+            <h3>Entrar ou Criar Sala</h3>
+            <div class="multiplayer-options">
+              <button class="multiplayer-option-btn" id="create-room-btn">
+                <span class="option-icon">➕</span>
+                <span>Criar Nova Sala</span>
+              </button>
+              <button class="multiplayer-option-btn" id="join-room-btn">
+                <span class="option-icon">🔗</span>
+                <span>Entrar em Sala</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="setup-section" id="create-room-section" style="display: none;">
+            <h3>Criar Sala</h3>
+            <input type="text" id="host-name-input" class="text-input" placeholder="Seu nome" maxlength="20" />
+
+            <div class="setup-subsection">
+              <label>Número de Jogadores:</label>
+              <div class="player-count-selector">
+                <button class="player-count-btn-mp" data-count="2">2</button>
+                <button class="player-count-btn-mp" data-count="3">3</button>
+                <button class="player-count-btn-mp" data-count="4">4</button>
+              </div>
+            </div>
+
+            <div class="setup-subsection" id="biome-selection-mp" style="display: none;">
+              <label>Escolha os Biomas:</label>
+              <div class="biome-grid">
+                <button class="biome-btn-mp" data-biome="Amazônia">
+                  <span class="biome-icon">🌳</span>
+                  <span class="biome-name">Amazônia</span>
+                </button>
+                <button class="biome-btn-mp" data-biome="Mata Atlântica">
+                  <span class="biome-icon">🌺</span>
+                  <span class="biome-name">Mata Atlântica</span>
+                </button>
+                <button class="biome-btn-mp" data-biome="Cerrado">
+                  <span class="biome-icon">🌾</span>
+                  <span class="biome-name">Cerrado</span>
+                </button>
+                <button class="biome-btn-mp" data-biome="Caatinga">
+                  <span class="biome-icon">🌵</span>
+                  <span class="biome-name">Caatinga</span>
+                </button>
+                <button class="biome-btn-mp" data-biome="Pantanal">
+                  <span class="biome-icon">🦩</span>
+                  <span class="biome-name">Pantanal</span>
+                </button>
+                <button class="biome-btn-mp" data-biome="Pampa">
+                  <span class="biome-icon">🌱</span>
+                  <span class="biome-name">Pampa</span>
+                </button>
+              </div>
+            </div>
+
+            <button id="confirm-create-room-btn" class="primary-btn" style="display: none;">Criar Sala</button>
+          </div>
+
+          <div class="setup-section" id="join-room-section" style="display: none;">
+            <h3>Entrar em Sala</h3>
+            <input type="text" id="join-name-input" class="text-input" placeholder="Seu nome" maxlength="20" />
+            <input type="text" id="room-code-input" class="text-input" placeholder="Código da sala" maxlength="6" />
+            <button id="confirm-join-room-btn" class="primary-btn">Entrar</button>
+          </div>
+
+          <div class="setup-section" id="lobby-section" style="display: none;">
+            <h3>Sala: <span id="lobby-room-code" class="room-code">------</span></h3>
+            <p class="lobby-instruction">Compartilhe este código com seus amigos!</p>
+
+            <div class="lobby-players" id="lobby-players-list">
+            </div>
+
+            <div class="lobby-status" id="lobby-status">
+              Aguardando jogadores...
+            </div>
+
+            <button id="start-multiplayer-game-btn" class="primary-btn" style="display: none;">Iniciar Jogo</button>
+          </div>
+
+          <button id="back-to-mode-btn" class="secondary-btn">← Voltar</button>
+        </div>
+      </div>
+
+      <div id="game-screen" class="screen">
+        <header class="game-header">
+          <div class="header-left">
+            <h2 class="game-title">BIOMA</h2>
+          </div>
+          <div class="header-center">
+            <div class="turn-indicator">
+              <span id="current-turn-text">Vez de: <strong id="current-player-name">Você</strong></span>
+            </div>
+          </div>
+          <div class="header-right">
+            <button id="rules-btn" class="icon-btn" title="Regras">?</button>
+          </div>
+        </header>
+
+        <div class="game-board">
+          <div class="opponents-area" id="opponents-area"></div>
+
+          <div class="center-area">
+            <div class="pile-container">
+              <div class="pile draw-pile" id="draw-pile">
+                <div class="pile-card">
+                  <div class="card-back">🌿</div>
+                </div>
+                <div class="pile-counter" id="draw-pile-counter">0</div>
+              </div>
+              <div class="pile discard-pile" id="discard-pile">
+                <div class="pile-placeholder">Descarte de Especiais</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="player-area" id="player-area">
+            <div class="player-biome-zone" id="player-biome-zone">
+              <div class="biome-header">
+                <span class="biome-label" id="player-biome-label">Seu Bioma</span>
+                <span class="biome-counter"><span id="player-biome-count">0</span>/8</span>
+              </div>
+              <div class="biome-grid-zone" id="player-biome-grid"></div>
+            </div>
+
+            <div id="player-active-card-container" class="player-active-card-container" style="display: none;"></div>
+
+            <div class="player-hand-container">
+              <div class="hand-header">
+                <span>Sua Mão</span>
+                <button class="shuffle-hand-btn" id="shuffle-hand-btn" title="Embaralhar mão">🔄</button>
+              </div>
+              <div class="player-hand" id="player-hand"></div>
+            </div>
+
+            <div class="action-bar" id="action-bar">
+              <button class="action-btn" id="draw-btn" disabled>Comprar</button>
+              <button class="action-btn" id="steal-btn" disabled>Roubar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="rules-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Regras do BIOMA</h3>
+            <button class="close-modal-btn">&times;</button>
+          </div>
+          <div class="modal-body">
+            <h4>Objetivo</h4>
+            <p>Seja o primeiro a colocar 8 cartas do seu bioma na sua área de bioma.</p>
+
+            <h4>Turno</h4>
+            <p>No seu turno, você pode fazer UMA ação:</p>
+            <ul>
+              <li>Comprar 1 carta</li>
+              <li>Colocar 1 carta do seu bioma</li>
+              <li>Usar 1 carta de Sorte</li>
+              <li>Roubar 1 carta de um oponente (que tenha 2+ cartas)</li>
+            </ul>
+
+            <h4>Tipos de Carta</h4>
+            <p><strong>🐾 Animal:</strong> Cartas do seu bioma ou Coringa Fauna (🌀 vale para qualquer bioma)</p>
+            <p><strong>⭐ Sorte:</strong> Efeitos positivos (Piedade, Devolve, Pulo+1, +2)</p>
+            <p><strong>☠ Azar:</strong> Efeitos negativos instantâneos ao comprar/roubar</p>
+
+            <h4>Cartas Especiais</h4>
+            <p><strong>Piedade (Sorte):</strong> Outros entregam 1 carta do seu bioma</p>
+            <p><strong>Devolve (Sorte):</strong> Outros devolvem 1 carta do próprio bioma</p>
+            <p><strong>Pulo+1:</strong> Alvo entrega carta e perde vez</p>
+            <p><strong>+2:</strong> Compre ou roube 2 cartas</p>
+            <p><strong>Devolve (Azar):</strong> Devolva 1 carta do seu bioma</p>
+            <p><strong>Pulo (Azar):</strong> Perca sua próxima vez</p>
+            <p><strong>Piedade (Azar):</strong> Entregue 1 carta de cada bioma aos jogadores</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="tooltip" class="tooltip"></div>
+      <div id="effect-display" class="effect-display"></div>
+      <div id="target-selector" class="modal">
+        <div class="modal-content target-selector-content">
+          <div class="modal-header">
+            <h3 id="target-selector-title">Escolha um Alvo</h3>
+          </div>
+          <div class="modal-body">
+            <div id="target-selector-options"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="victory-modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>🎉 Vitória! 🎉</h3>
+          </div>
+          <div class="modal-body victory-body">
+            <p id="victory-message"></p>
+            <button id="new-game-btn" class="primary-btn">Novo Jogo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/game.js"></script>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
