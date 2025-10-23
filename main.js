@@ -1389,7 +1389,7 @@ initMultiplayerScreen();
 // ===============================
 // Função de fallback para iniciar o jogo multiplayer
 // ===============================
-async function startMultiplayerGame() {
+async function startMultiPlayerGame() {  // <--- "P" maiúsculo aqui
   try {
     if (!multiplayerManager || !multiplayerManager.currentRoom) {
       alert("Erro: nenhuma sala ativa encontrada.");
