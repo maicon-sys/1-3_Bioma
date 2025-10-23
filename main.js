@@ -1385,3 +1385,23 @@ initModeSelectScreen();
 initSetupScreen();
 initGameScreen();
 initMultiplayerScreen();
+
+// ===============================
+// Função de fallback para iniciar o jogo multiplayer
+// ===============================
+async function startMultiplayerGame() {
+  try {
+    if (!multiplayerManager || !multiplayerManager.currentRoom) {
+      alert("Erro: nenhuma sala ativa encontrada.");
+      return;
+    }
+
+    const deck = []; // Aqui você pode carregar ou gerar o baralho padrão
+    await multiplayerManager.startGame(deck);
+
+    alert("Partida iniciada com sucesso!");
+  } catch (error) {
+    console.error("Erro ao iniciar jogo multiplayer:", error);
+    alert("Erro ao iniciar jogo multiplayer: " + error.message);
+  }
+}
