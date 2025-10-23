@@ -1310,7 +1310,6 @@ function initJoinRoomFlow() {
       alert('Erro ao entrar na sala: ' + error.message);
     }
   });
-}
 
 // ===============================
 // LOBBY MULTIPLAYER (corrigido)
@@ -1320,6 +1319,9 @@ function showLobby(room, isHost) {
   document.getElementById('join-room-section').style.display = 'none';
   document.getElementById('lobby-section').style.display = 'block';
   document.getElementById('lobby-room-code').textContent = room.code || room;
+
+  // Atualiza o lobby imediatamente ao entrar
+  updateLobbyPlayers();
 
   // Escuta atualizações em tempo real do Supabase
   multiplayerManager.onPlayersUpdate((players) => {
@@ -1345,9 +1347,8 @@ function showLobby(room, isHost) {
   if (isHost && startBtn) {
     startBtn.addEventListener('click', startMultiPlayerGame);
   }
+}
 
-  // Atualiza o lobby imediatamente ao entrar
-  updateLobbyPlayers();
 }
 
 // ===============================
